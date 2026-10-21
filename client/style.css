@@ -1,0 +1,2625 @@
+﻿:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: rgba(17, 24, 39, 0.75);
+  --bg-card-hover: rgba(31, 41, 55, 0.85);
+  --bg-modal: rgba(15, 23, 42, 0.96);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-focus: #38bdf8;
+  
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+  
+  --accent-cyan: #38bdf8;
+  --accent-indigo: #818cf8;
+  --accent-emerald: #10b981;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --shadow-glow: 0 0 20px rgba(56, 189, 248, 0.2);
+  
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft JhengHei", "PingFang TC", sans-serif;
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.08) 0px, transparent 50%);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* App Header */
+header.app-header {
+  height: 64px;
+  background: rgba(17, 24, 39, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+}
+.brand-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  background: linear-gradient(90deg, #ffffff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.brand-badge {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+}
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-md);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.tab-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(129, 140, 248, 0.2));
+  color: #fff;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+/* Header Right */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.search-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.search-trigger-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: #fff;
+}
+.kbd-shortcut {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+}
+
+/* Main Workspace */
+main.app-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.view-section {
+  display: none;
+  flex: 1;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+.view-section.active {
+  display: flex;
+}
+
+/* ============================================================
+   1. Calendar View Styling
+   ============================================================ */
+.calendar-view-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.calendar-main-pane {
+  flex: 1;
+  position: relative;
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.calendar-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.month-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.month-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  min-width: 160px;
+}
+.nav-icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-icon-btn:hover {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: var(--accent-cyan);
+}
+.btn-today {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.btn-today:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Notion-Style Calendar Grid & Week Rows */
+.calendar-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  background: var(--bg-main);
+  overflow: hidden;
+}
+.calendar-grid[style*="display: none"] {
+  display: none !important;
+}
+.calendar-weekdays-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: rgba(15, 23, 42, 0.7);
+  border-bottom: 1px solid var(--border-color);
+}
+.day-name-header {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  padding: 8px 0;
+  text-transform: uppercase;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+.day-name-header:last-child {
+  border-right: none;
+}
+
+.calendar-weeks-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+}
+.calendar-week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  position: relative;
+  flex: 1;
+  min-height: 110px;
+  border-bottom: 1px solid var(--border-color);
+}
+.calendar-week-row:last-child {
+  border-bottom: none;
+}
+
+/* Background Day Cells */
+.calendar-week-row .week-day-cell {
+  border-right: 1px solid var(--border-color);
+  background: var(--bg-card);
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 100%;
+  position: relative;
+  z-index: 1;
+}
+.calendar-week-row .week-day-cell:last-child {
+  border-right: none;
+}
+.calendar-week-row .week-day-cell:hover {
+  background: var(--bg-card-hover);
+}
+.calendar-week-row .week-day-cell.other-month {
+  opacity: 0.38;
+}
+.calendar-week-row .week-day-cell.is-today {
+  background: rgba(56, 189, 248, 0.05);
+  box-shadow: inset 0 0 0 1px var(--accent-cyan);
+}
+.calendar-week-row .week-day-cell.is-selected {
+  background: rgba(129, 140, 248, 0.12);
+  box-shadow: inset 0 0 0 2px var(--accent-indigo);
+}
+.day-number-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.day-num {
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.is-today .day-num {
+  background: var(--accent-cyan);
+  color: #0b0f19;
+  font-weight: 700;
+}
+.day-task-count-badge {
+  font-size: 0.7rem;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+}
+
+/* Multi-Day Spanning Overlay Layer */
+.calendar-week-row .week-events-layer {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  right: 0;
+  bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  pointer-events: none;
+  padding: 0 4px;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.calendar-multiday-track {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0 4px;
+  width: 100%;
+}
+.multiday-bar {
+  pointer-events: auto;
+  font-size: 0.75rem;
+  font-weight: 500;
+  height: 23px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  border-radius: 4px;
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+.multiday-bar:hover {
+  filter: brightness(1.18);
+  transform: translateY(-1px);
+}
+.multiday-bar.client-fubon {
+  background: #5a2c27; /* Notion 風格深棕紅色 */
+  border-color: rgba(245, 158, 11, 0.45);
+  color: #fef08a;
+}
+.multiday-bar.client-kuorui {
+  background: #1e3a5f; /* 國瑞沉穩深藍 */
+  border-color: rgba(56, 189, 248, 0.45);
+  color: #bae6fd;
+}
+.multiday-bar.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+  background: #1e293b;
+}
+.multiday-bar.continue-left {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 2px dashed rgba(255, 255, 255, 0.5);
+}
+.multiday-bar.continue-right {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: 2px dashed rgba(255, 255, 255, 0.5);
+}
+
+/* Single Day Tasks in Week */
+.calendar-singleday-track {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0 4px;
+  width: 100%;
+}
+.singleday-cell-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+  pointer-events: auto;
+}
+.singleday-pill {
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  border-left: 3px solid var(--accent-indigo);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.singleday-pill:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+.singleday-pill.client-fubon { border-left-color: #f59e0b; }
+.singleday-pill.client-kuorui { border-left-color: #10b981; }
+.singleday-pill.completed {
+  opacity: 0.5;
+  text-decoration: line-through;
+}
+
+.calendar-side-pane {
+  width: 390px;
+  border-left: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.side-pane-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.selected-date-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+.selected-day-tasks-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.task-item-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.task-item-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(56, 189, 248, 0.4);
+  transform: translateX(3px);
+}
+.task-checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  margin-top: 3px;
+  cursor: pointer;
+  accent-color: var(--accent-emerald);
+}
+.task-card-content {
+  flex: 1;
+  min-width: 0;
+}
+.task-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.task-card-title.completed {
+  text-decoration: line-through;
+  color: var(--text-dim);
+}
+.task-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.meta-tag {
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+.meta-tag.client-tag {
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--accent-amber);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  font-weight: 600;
+}
+.meta-tag.status-tag {
+  background: rgba(129, 140, 248, 0.15);
+  color: var(--accent-indigo);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+}
+.meta-tag.steps-tag {
+  background: rgba(16, 185, 129, 0.12);
+  color: var(--accent-emerald);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+/* Delete button on task card */
+.btn-delete-task-card {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: all 0.2s;
+}
+.task-item-card:hover .btn-delete-task-card {
+  opacity: 1;
+}
+.btn-delete-task-card:hover {
+  color: var(--accent-rose);
+  background: rgba(244, 63, 94, 0.15);
+}
+
+.add-task-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border-color);
+}
+.btn-primary-action {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+  color: #0b0f19;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+.btn-primary-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.45);
+}
+
+/* ============================================================
+   2. Direct WYSIWYG Editor (直接閱讀排版編輯，絕不跑版)
+   ============================================================ */
+.wysiwyg-paper-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.15);
+  min-width: 0;
+  box-sizing: border-box;
+}
+.wysiwyg-paper {
+  width: 100%;
+  max-width: 900px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px 40px;
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+.wysiwyg-canvas {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  min-height: 480px;
+  outline: none;
+  color: #f1f5f9;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  word-break: break-word;
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+.wysiwyg-canvas:empty::before {
+  content: "在此直接打字輸入內容，支援貼圖 (Ctrl+V)...";
+  color: var(--text-dim);
+}
+
+/* Markdown Source Mode Editor */
+.markdown-source-editor {
+  flex: 1;
+  width: 100%;
+  max-width: 100%;
+  min-height: 480px;
+  outline: none;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: #38bdf8;
+  font-family: 'Consolas', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  padding: 18px 20px;
+  box-sizing: border-box;
+  resize: vertical;
+  tab-size: 2;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.markdown-source-editor:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.tool-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tool-action-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: var(--border-hover);
+}
+.tool-action-btn.primary {
+  background: rgba(14, 165, 233, 0.18);
+  border-color: rgba(14, 165, 233, 0.45);
+  color: var(--accent-cyan);
+}
+.tool-action-btn.primary:hover {
+  background: rgba(14, 165, 233, 0.35);
+  color: #fff;
+}
+.tool-action-btn.active {
+  background: rgba(168, 85, 247, 0.25);
+  border-color: rgba(168, 85, 247, 0.6);
+  color: #c084fc;
+}
+
+/* Drawer Quick Add Bar (一行打字按 Enter 快速建立待辦) */
+.drawer-quick-add-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin: 10px 14px 6px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+.drawer-quick-add-box:focus-within {
+  border-color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.08);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+}
+.drawer-quick-add-icon {
+  font-size: 1rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+  user-select: none;
+}
+.drawer-quick-add-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 0.86rem;
+  outline: none;
+}
+.drawer-quick-add-input::placeholder {
+  color: var(--text-dim);
+}
+
+/* Modal Frame */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.modal-overlay.active {
+  display: flex;
+  animation: fadeIn 0.2s ease-out;
+}
+
+/* 100% Notion Page Modal Format */
+.modal-center-canvas.notion-page-modal {
+  width: 960px;
+  max-width: 94vw;
+  height: 88vh;
+  background: #191919 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.85), 0 0 20px rgba(56, 189, 248, 0.12);
+  overflow: hidden;
+  animation: scaleUp 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.modal-center-canvas.notion-page-modal.is-expanded {
+  width: 98vw !important;
+  height: 96vh !important;
+  max-width: 98vw !important;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleUp { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+
+.notion-modal-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.notion-top-bar-left, .notion-top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notion-icon-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 5px 9px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+.notion-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.notion-icon-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.btn-close-modal {
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  color: var(--text-muted);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-close-modal:hover {
+  background: rgba(244, 63, 94, 0.2);
+  color: var(--accent-rose);
+}
+
+/* Single Native Continuous Scroll Container */
+.notion-page-scrollable {
+  flex: 1;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  padding: 32px 56px 40px 56px;
+  display: flex;
+  flex-direction: column;
+  background: #191919;
+}
+.notion-page-scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+.notion-page-scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+.notion-page-scrollable::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 4px;
+}
+.notion-page-scrollable::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Title Section */
+.notion-title-section {
+  margin-bottom: 18px;
+}
+.notion-title-input {
+  width: 100%;
+  font-size: 1.95rem;
+  font-weight: 700;
+  color: #f8fafc;
+  background: transparent;
+  border: none;
+  outline: none;
+  line-height: 1.3;
+}
+.notion-title-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* Notion Properties Vertical Key-Value List */
+.notion-properties-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+}
+.notion-prop-row {
+  display: flex;
+  align-items: center;
+  min-height: 34px;
+}
+.notion-prop-name {
+  width: 130px;
+  min-width: 130px;
+  color: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  font-size: 0.84rem;
+}
+.notion-prop-val {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notion-done-checkbox {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--accent-emerald);
+}
+.notion-done-label {
+  cursor: pointer;
+  font-size: 0.85rem;
+  user-select: none;
+  color: var(--text-dim);
+}
+.notion-date-range-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.notion-date-picker {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  font-size: 0.84rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  outline: none;
+  color-scheme: dark;
+}
+.notion-date-picker:focus {
+  border-color: var(--accent-cyan);
+}
+.notion-date-arrow {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.85rem;
+}
+.notion-prop-select {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+  font-size: 0.84rem;
+  padding: 4px 12px;
+  border-radius: 12px;
+  outline: none;
+  color-scheme: dark;
+  cursor: pointer;
+}
+.notion-prop-select.priority-select {
+  color: #f59e0b;
+  font-weight: 600;
+}
+.notion-prop-select.status-select {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+.notion-prop-input.client-input {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--accent-cyan);
+  font-size: 0.84rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 12px;
+  outline: none;
+  width: 170px;
+}
+.notion-prop-input.client-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+.notion-page-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 10px 0 20px 0;
+}
+
+/* Page Body: Subtasks & WYSIWYG */
+.notion-page-body-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.notion-editor-toolbar {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 14px;
+  background: rgba(22, 27, 38, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  gap: 8px;
+  position: sticky;
+  top: -32px;
+  z-index: 15;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+.notion-wysiwyg-canvas {
+  flex: 1;
+  min-height: 280px;
+  color: #f1f5f9;
+  font-size: 1rem;
+  line-height: 1.8;
+  outline: none;
+  word-break: break-word;
+  padding: 12px 4px;
+}
+.notion-wysiwyg-canvas:empty::before {
+  content: attr(placeholder);
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+.notion-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  background: rgba(0, 0, 0, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+/* Select and Input Form Controls */
+select, .meta-select, .form-select {
+  background-color: #1e293b;
+  border: 1px solid var(--border-color);
+  color: #f1f5f9;
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  outline: none;
+  color-scheme: dark; /* 強制 Windows Chromium 採用深色原生下拉彈出選單 */
+}
+select option, .meta-select option, .form-select option {
+  background-color: #1e293b;
+  color: #f1f5f9;
+  padding: 8px 12px;
+}
+.meta-input {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 5px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  outline: none;
+}
+.meta-select:focus, .meta-input:focus, select:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.editor-toolbar {
+  padding: 8px 24px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  transition: all 0.2s ease;
+}
+.toolbar-compact-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+.toolbar-compact-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+.toolbar-compact-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toolbar-hint-text {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  user-select: none;
+}
+.btn-toggle-blocks {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-toggle-blocks:hover, .btn-toggle-blocks.active {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+.toolbar-expanded-blocks {
+  display: none !important;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  animation: fadeIn 0.15s ease-out;
+}
+.toolbar-expanded-blocks.is-expanded {
+  display: flex !important;
+}
+.toolbar-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.tool-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  padding: 5px 9px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+.tool-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.template-dropdown-btn {
+  background: rgba(129, 140, 248, 0.15);
+  border: 1px solid rgba(129, 140, 248, 0.3);
+  color: var(--accent-indigo);
+  font-weight: 600;
+}
+
+/* Notion-Style Floating Selection Bubble Menu (反白文字浮動氣泡工具列) */
+.floating-bubble-menu {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #181f2f;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 4px 6px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.2);
+  backdrop-filter: blur(12px);
+  animation: bubblePop 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  transform: translate(-50%, -100%);
+  pointer-events: auto;
+}
+@keyframes bubblePop {
+  from { opacity: 0; transform: translate(-50%, -85%) scale(0.95); }
+  to { opacity: 1; transform: translate(-50%, -100%) scale(1); }
+}
+.bubble-btn {
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  padding: 5px 8px;
+  border-radius: 4px;
+  font-size: 0.84rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  transition: all 0.12s ease;
+  line-height: 1;
+}
+.bubble-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--accent-cyan);
+}
+.bubble-divider {
+  color: rgba(255, 255, 255, 0.18);
+  font-size: 0.75rem;
+  margin: 0 2px;
+  user-select: none;
+}
+
+.modal-canvas-footer {
+  padding: 12px 24px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+.btn-delete-action {
+  padding: 6px 12px;
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  color: var(--accent-rose);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-delete-action:hover {
+  background: rgba(244, 63, 94, 0.25);
+  color: #fff;
+}
+.save-status-text {
+  font-size: 0.82rem;
+  color: var(--accent-emerald);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.footer-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn-promote {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: var(--accent-amber);
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-promote:hover {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fff;
+}
+.btn-close-action {
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-color);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-close-action:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* 筆記頂部控制列專用：與 .meta-select 齊平且防折行 */
+.btn-delete-note-action {
+  height: 32px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  color: var(--accent-rose);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-delete-note-action:hover {
+  background: rgba(244, 63, 94, 0.22);
+  color: #fff;
+  border-color: var(--accent-rose);
+}
+
+/* ============================================================
+   4. Notebooks View (個人知識庫 + 原地更名)
+   ============================================================ */
+.notebooks-view-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.notebook-sidebar {
+  width: 320px;
+  min-width: 320px;
+  max-width: 320px;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+.sidebar-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sidebar-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-add-category {
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  color: var(--accent-cyan);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.btn-add-category:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: var(--accent-cyan);
+}
+.notebook-tree-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+}
+.category-group {
+  margin-bottom: 14px;
+}
+.category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+.category-header:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+}
+.category-name-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.category-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.btn-category-action {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  padding: 3px 6px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.btn-category-action:hover {
+  color: var(--accent-cyan);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Inline rename input */
+.inline-rename-input {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--accent-cyan);
+  color: #fff;
+  font-size: 0.85rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  outline: none;
+  width: 140px;
+}
+
+.category-notes-sublist {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 14px;
+  margin-top: 4px;
+}
+.note-tree-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.note-tree-item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--accent-cyan);
+}
+.note-tree-item.active {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-cyan);
+  font-weight: 600;
+  border-left: 3px solid var(--accent-cyan);
+}
+
+.notebook-main-canvas {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg-primary);
+  height: 100%;
+}
+.notebook-doc-header {
+  padding: 16px 32px;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(17, 24, 39, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.doc-title-input {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  outline: none;
+  width: 65%;
+  white-space: pre-wrap;
+}
+.doc-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Markdown Rendered Styles */
+.markdown-body {
+  white-space: normal;
+  word-break: break-word;
+}
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+  color: #fff;
+  margin-top: 0.8em;
+  margin-bottom: 0.3em;
+  font-weight: 700;
+  white-space: normal;
+}
+.markdown-body h1 { font-size: 1.6rem; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+.markdown-body h2 { font-size: 1.3rem; }
+.markdown-body h3 { font-size: 1.1rem; color: var(--accent-cyan); }
+.markdown-body p { margin-bottom: 0.8em; }
+.markdown-body hr { border: none; border-top: 1px solid var(--border-color); margin: 1.2em 0; }
+.markdown-body blockquote {
+  border-left: 4px solid var(--accent-indigo);
+  padding: 8px 16px;
+  background: rgba(129, 140, 248, 0.08);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 1em 0;
+  color: #cbd5e1;
+}
+.markdown-body pre {
+  background: #090d16;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  overflow-x: auto;
+  margin: 1em 0;
+  white-space: pre;
+}
+.markdown-body code {
+  font-family: "Fira Code", Consolas, monospace;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  color: var(--accent-cyan);
+}
+.markdown-body pre code {
+  background: transparent;
+  padding: 0;
+  color: #e2e8f0;
+}
+.markdown-body ul, .markdown-body ol {
+  padding-left: 24px;
+  margin-bottom: 0.8em;
+}
+.markdown-body li {
+  margin-bottom: 0.3em;
+}
+.markdown-body img, .wysiwyg-canvas img {
+  display: block;
+  max-width: 100% !important;
+  height: auto !important;
+  box-sizing: border-box;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  margin: 14px 0;
+  box-shadow: var(--shadow-md);
+  cursor: zoom-in;
+  transition: transform 0.2s;
+}
+.markdown-body img:hover, .wysiwyg-canvas img:hover {
+  transform: scale(1.01);
+}
+
+/* Notion-Style Modern Table (清晰框線與儲存格樣式) */
+.markdown-body table, .wysiwyg-canvas table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  font-size: 0.95rem;
+  background: rgba(15, 23, 42, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.markdown-body th, .markdown-body td, .wysiwyg-canvas th, .wysiwyg-canvas td {
+  border: 1px solid var(--border-color);
+  padding: 10px 14px;
+  text-align: left;
+  line-height: 1.6;
+}
+.markdown-body th, .wysiwyg-canvas th {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--accent-cyan);
+  font-weight: 700;
+  border-bottom: 2px solid var(--border-color);
+  white-space: nowrap;
+}
+.markdown-body tr:nth-child(even) td, .wysiwyg-canvas tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.02);
+}
+.markdown-body tr:hover td, .wysiwyg-canvas tr:hover td {
+  background: rgba(56, 189, 248, 0.05);
+}
+
+/* Notion-Style Callouts (醒目彩色呼叫提示框) */
+.callout-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  margin: 16px 0;
+  border-left: 4px solid;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.callout-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+.callout-content {
+  flex: 1;
+  min-width: 0;
+}
+.callout-note {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: var(--accent-cyan);
+  color: #e0f2fe;
+}
+.callout-warning {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: var(--accent-amber);
+  color: #fef3c7;
+}
+.callout-tip {
+  background: rgba(16, 185, 129, 0.08);
+  border-color: var(--accent-emerald);
+  color: #d1fae5;
+}
+.callout-danger {
+  background: rgba(244, 63, 94, 0.08);
+  border-color: var(--accent-rose);
+  color: #ffe4e6;
+}
+
+/* OneNote / Notion Style Accordion Toggle (可折疊收合區塊) */
+details.toggle-block {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  margin: 14px 0;
+  transition: all 0.2s;
+}
+details.toggle-block[open] {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+details.toggle-block > summary {
+  font-weight: 600;
+  color: #f8fafc;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+}
+details.toggle-block > summary::-webkit-details-marker {
+  color: var(--accent-cyan);
+}
+details.toggle-block > .toggle-content {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+}
+
+/* Slash Command Dropdown Menu (斜線快捷選單) */
+.slash-menu {
+  position: fixed;
+  z-index: 1000;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7), 0 8px 10px -6px rgba(0, 0, 0, 0.7);
+  width: 280px;
+  max-height: 340px;
+  overflow-y: auto;
+  padding: 6px;
+  display: none;
+  animation: fadeIn 0.15s ease-out;
+}
+.slash-menu.active {
+  display: block;
+}
+.slash-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  color: #f1f5f9;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.slash-item:hover, .slash-item.selected {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--accent-cyan);
+}
+.slash-icon {
+  font-size: 1.15rem;
+  width: 24px;
+  text-align: center;
+}
+.slash-text {
+  display: flex;
+  flex-direction: column;
+}
+.slash-title {
+  font-weight: 600;
+}
+.slash-desc {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+/* Search Modal (Ctrl+K) */
+.search-modal-box {
+  width: 640px;
+  max-width: 90vw;
+  background: var(--bg-modal);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.search-input-wrapper {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.search-input-field {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-size: 1.1rem;
+  color: #fff;
+  outline: none;
+}
+.search-results-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.search-result-item {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.search-result-item:hover {
+  background: rgba(56, 189, 248, 0.12);
+}
+.result-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.result-title {
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+.result-snippet {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+/* Lightbox Modal */
+.lightbox-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  cursor: zoom-out;
+}
+.lightbox-modal.active {
+  display: flex;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.toast {
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  background: rgba(17, 24, 39, 0.95);
+  border: 1px solid var(--accent-emerald);
+  color: #fff;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow-xl);
+  animation: slideInRight 0.2s ease-out;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+
+/* ========================================================
+   v3.0.0 NEW FEATURES & BUG FIXES
+   ======================================================== */
+
+/* Calendar Column Width & Tag Overflow Fix */
+.calendar-day-cell {
+  min-width: 0 !important;
+  overflow: hidden;
+}
+.day-task-pill {
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+/* Collapsible Right Drawer */
+.calendar-side-pane {
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), min-width 0.3s ease, opacity 0.2s ease;
+  position: relative;
+}
+.calendar-side-pane.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  border-left: none !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+/* Calendar Toolbar Right & Toggle Button (無懸浮遮蔽) */
+.calendar-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.btn-toggle-pane {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.btn-toggle-pane:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: var(--accent-cyan);
+}
+.btn-toggle-pane.is-collapsed {
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--accent-cyan);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+/* Collapsible Notebook Sidebar */
+.notebook-sidebar.collapsed {
+  width: 0 !important;
+  min-width: 0 !important;
+  border-right: none !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  opacity: 0;
+  pointer-events: none;
+}
+.notebook-sidebar.collapsed {
+  display: none !important;
+}
+.notebook-main-canvas.zen-mode {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000 !important;
+  background: var(--bg-main) !important;
+  max-width: 100% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.notebook-main-canvas.zen-mode .notebook-doc-header {
+  padding: 14px 48px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-color);
+}
+.notebook-main-canvas.zen-mode .wysiwyg-paper-wrapper {
+  padding: 0 !important;
+  background: transparent !important;
+}
+.notebook-main-canvas.zen-mode .wysiwyg-paper {
+  max-width: 100% !important;
+  width: 100% !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 32px 64px !important;
+}
+.notebook-main-canvas.zen-mode .wysiwyg-canvas {
+  max-width: 100% !important;
+  width: 100% !important;
+  font-size: 1.08rem;
+  line-height: 1.85;
+}
+
+
+
+.sidebar-expand-tab {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 30;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.82rem;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-md);
+  transition: all 0.2s ease;
+}
+.sidebar-expand-tab:hover {
+  background: var(--bg-card-hover);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+.sidebar-expand-tab.active {
+  display: flex !important;
+}
+
+/* Category Accordion / Folders */
+.category-header {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s;
+}
+.category-header:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.category-arrow {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-block;
+  margin-right: 6px;
+}
+.category-group.collapsed .category-arrow {
+  transform: rotate(-90deg);
+}
+.category-group.collapsed .category-notes-sublist {
+  display: none;
+}
+
+/* Calendar View Switcher (Month / Week / Day) */
+.calendar-view-switcher {
+  display: flex;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  gap: 2px;
+}
+.cal-view-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 4px 10px;
+  font-size: 0.82rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.cal-view-btn:hover {
+  color: var(--text-main);
+}
+.cal-view-btn.active {
+  background: var(--accent-indigo);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Notion-Style Calendar Week View (單行 7 欄全高日曆行 + 跨欄連續彩色長條卡片) */
+.week-view-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1;
+  min-height: calc(100vh - 200px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.week-view-grid[style*="display: none"] {
+  display: none !important;
+}
+
+.week-view-header {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-color);
+}
+.week-view-header-col {
+  padding: 10px 12px;
+  text-align: center;
+  border-right: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.week-view-header-col:last-child {
+  border-right: none;
+}
+.week-view-header-col:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.week-view-header-col.is-today .today-badge {
+  background: var(--accent-cyan);
+  color: #0f172a;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+.week-view-header-col.is-selected {
+  background: rgba(56, 189, 248, 0.08);
+  border-bottom: 2px solid var(--accent-cyan);
+}
+.week-header-dayname {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+.week-header-datenumber {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.week-view-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Multi-day Spanning Track */
+.week-view-multiday-area {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 4px;
+  gap: 6px 0;
+  background: rgba(15, 23, 42, 0.4);
+}
+.week-spanning-bar {
+  margin: 0 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  z-index: 5;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.week-spanning-bar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+}
+.multiday-client-tag {
+  font-size: 0.68rem;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.multiday-step-badge {
+  font-size: 0.7rem;
+  opacity: 0.85;
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* 7 Columns Area */
+.week-view-columns-area {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  flex: 1;
+  min-height: 480px;
+}
+.week-view-col {
+  border-right: 1px solid var(--border-color);
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: transparent;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+.week-view-col:last-child {
+  border-right: none;
+}
+.week-view-col:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+.week-view-col.is-today {
+  background: rgba(56, 189, 248, 0.04);
+}
+.week-view-col.is-selected {
+  background: rgba(56, 189, 248, 0.07);
+}
+.week-col-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.week-task-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--accent-indigo);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.week-task-card:hover {
+  border-color: var(--accent-cyan);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+.week-task-card.completed {
+  opacity: 0.6;
+  text-decoration: line-through;
+  border-left-color: var(--accent-emerald) !important;
+}
+.week-task-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.week-task-client-badge {
+  font-size: 0.68rem;
+  color: var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.week-task-priority {
+  font-size: 0.7rem;
+  margin-left: auto;
+}
+.week-task-priority.high { color: #ef4444; }
+.week-task-priority.normal { color: #3b82f6; }
+.week-task-priority.low { color: #64748b; }
+
+.week-task-card-title {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-main);
+  line-height: 1.4;
+  word-break: break-word;
+}
+.week-task-progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.week-task-progress-bar {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.week-task-progress-fill {
+  height: 100%;
+  background: var(--accent-emerald);
+}
+
+.btn-col-add-task {
+  margin-top: auto;
+  background: transparent;
+  border: 1px dashed var(--border-color);
+  color: var(--text-dim);
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+.week-view-col:hover .btn-col-add-task {
+  opacity: 1;
+}
+.btn-col-add-task:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+/* Day View Container */
+.day-view-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.day-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 12px;
+}
+.day-view-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+.day-view-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.day-view-task-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+.day-view-task-card:hover {
+  border-color: var(--accent-cyan);
+}
+.day-view-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  padding-left: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+.day-step-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+}
+.day-step-row.done {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+/* Visual M x N Table Grid Picker */
+.table-grid-picker {
+  display: none !important;
+  position: fixed;
+  z-index: 500;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  box-shadow: var(--shadow-xl);
+  width: 196px;
+  backdrop-filter: blur(12px);
+}
+.grid-picker-title {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.table-grid-matrix {
+  display: grid;
+  grid-template-columns: repeat(8, 18px);
+  grid-template-rows: repeat(8, 18px);
+  gap: 3px;
+  justify-content: center;
+}
+.grid-cell {
+  width: 18px;
+  height: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.grid-cell.highlighted {
+  background: rgba(56, 189, 248, 0.45);
+  border-color: var(--accent-cyan);
+}
+
+/* Note Tree Drag & Drop Styles */
+.note-tree-item[draggable="true"] {
+  cursor: grab;
+}
+.note-tree-item[draggable="true"]:active {
+  cursor: grabbing;
+}
+.note-tree-item.dragging {
+  opacity: 0.45;
+  outline: 2px dashed var(--accent-cyan);
+  background: rgba(56, 189, 248, 0.12);
+}
+.category-header.drag-over {
+  background: rgba(56, 189, 248, 0.22) !important;
+  border: 1px dashed var(--accent-cyan) !important;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+
+/* Image Resizable Wrapper & Handles */
+.image-resizable-wrapper {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  margin: 10px 0;
+  line-height: 0;
+  user-select: none;
+}
+.image-resizable-wrapper.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.image-resizable-wrapper.align-left {
+  display: block;
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+}
+.image-resizable-wrapper.align-right {
+  display: block;
+  margin-left: auto;
+  margin-right: 0;
+  text-align: right;
+}
+.image-resizable-wrapper img {
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  transition: outline 0.15s;
+}
+.image-resizable-wrapper.is-selected img {
+  outline: 2px solid var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+}
+.image-resize-handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: var(--accent-cyan);
+  border: 2px solid #fff;
+  border-radius: 2px;
+  bottom: -6px;
+  right: -6px;
+  cursor: se-resize;
+  z-index: 10;
+  display: none;
+}
+.image-resizable-wrapper.is-selected .image-resize-handle {
+  display: block;
+}
+.image-float-toolbar {
+  position: absolute;
+  top: -42px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(17, 24, 39, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--shadow-xl);
+  z-index: 50;
+  backdrop-filter: blur(8px);
+  white-space: nowrap;
+}
+.img-tool-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-dim);
+  font-size: 0.72rem;
+  padding: 3px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.img-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-main);
+  border-color: var(--accent-cyan);
+}
+.img-tool-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+  color: #f87171;
+}
+
+/* Interactive Checkbox & Todo Items (Notion-Style Freedom Flow) */
+.todo-item-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 1px 0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background 0.15s, margin-left 0.15s ease;
+  min-height: 26px;
+  line-height: 1.5;
+  position: relative;
+}
+.todo-item-line:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+.todo-item-line[data-level]:not([data-level="0"]) {
+  border-left: 2px solid rgba(255, 255, 255, 0.18);
+}
+.interactive-todo-cb {
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  accent-color: var(--accent-emerald);
+  border-radius: 3px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.todo-text-span {
+  outline: none;
+  flex: 1;
+  min-width: 0;
+  color: #f1f5f9;
+  font-size: 0.96rem;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.todo-text-span:empty::before {
+  content: "輸入待辦步驟內容...";
+  color: var(--text-dim);
+}
+.todo-item-line.is-done .todo-text-span {
+  text-decoration: line-through;
+  color: var(--text-dim);
+  opacity: 0.65;
+}
+
+/* ========================================================
+   v3.2.0 ONE NOTE HIERARCHICAL MULTI-LEVEL TREE STYLES
+   ======================================================== */
+.category-notes-sublist.nested {
+  margin-left: 12px;
+  padding-left: 8px;
+  border-left: 1px dashed rgba(255, 255, 255, 0.15);
+}
+.category-header.sub-category {
+  font-size: 0.84rem;
+  padding: 4px 6px;
+  margin: 2px 0;
+}
+.btn-category-action {
+  padding: 2px 5px;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+.btn-category-action:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--accent-cyan);
+}
+
+/* ========================================================
+   Notion-Style Color & Highlight Palette Picker Styles
+   ======================================================== */
+.color-palette-picker {
+  position: fixed;
+  z-index: 1050;
+  background: #181f2f;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.15);
+  backdrop-filter: blur(16px);
+  width: 250px;
+  max-height: min(390px, calc(100vh - 40px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  user-select: none;
+  animation: fadeIn 0.15s ease-out;
+}
+.color-palette-picker::-webkit-scrollbar {
+  width: 5px;
+}
+.color-palette-picker::-webkit-scrollbar-track {
+  background: transparent;
+}
+.color-palette-picker::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+.color-palette-picker::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+.palette-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.palette-swatches-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+.color-swatch-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+.color-swatch-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--border-focus);
+  transform: translateY(-1px);
+}
+.color-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+.color-dot.default-dot {
+  background: #f3f4f6;
+  border: 1px solid #4b5563;
+}
+

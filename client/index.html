@@ -1,0 +1,622 @@
+﻿<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個人工作資產與日曆式知識庫系統 | Personal WorkHub</title>
+  <link rel="stylesheet" href="style.css?v=2.0.2">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="brand-section">
+      <div class="brand-icon">⚡</div>
+      <div class="brand-title">Personal WorkHub</div>
+      <span class="brand-badge">個人知識資產</span>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" id="tabCalendarBtn">
+        <span>📅</span> 待辦日曆與步驟清單
+      </button>
+      <button class="tab-btn" id="tabNotebookBtn">
+        <span>📚</span> 個人知識筆記庫
+      </button>
+    </nav>
+
+    <div class="header-actions">
+      <button class="search-trigger-btn" id="searchTriggerBtn">
+        <span>🔍 全文搜尋</span>
+        <span class="kbd-shortcut">Ctrl+K</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Areas -->
+  <main class="app-main">
+
+    <!-- 1. Calendar View (分步驟 Checklist 與個人待辦) -->
+    <section class="view-section active" id="calendarView">
+      <div class="calendar-view-container">
+        
+        <!-- Main Calendar Month Grid -->
+        <div class="calendar-main-pane" style="position: relative;">
+          <div class="calendar-header-bar">
+            <div class="month-controls">
+              <button class="nav-icon-btn" id="prevMonthBtn" title="上一週期">◀</button>
+              <h2 class="month-title" id="currentMonthLabel">2026 年 10 月</h2>
+              <button class="nav-icon-btn" id="nextMonthBtn" title="下一週期">▶</button>
+              <button class="btn-today" id="todayBtn">今天</button>
+            </div>
+
+            <!-- View Switcher [月 | 週 | 日] -->
+            <div class="calendar-view-switcher">
+              <button class="cal-view-btn active" data-cal-view="month" id="calViewMonthBtn">📅 月</button>
+              <button class="cal-view-btn" data-cal-view="week" id="calViewWeekBtn">📆 週</button>
+              <button class="cal-view-btn" data-cal-view="day" id="calViewDayBtn">📝 日</button>
+            </div>
+
+            <div class="calendar-toolbar-right">
+              <div class="quick-stats" id="monthStatsText">
+                本月共有 0 項任務
+              </div>
+              <button class="btn-toggle-pane" id="calendarToggleDrawerBtn" title="展開／收合待辦清單 (釋放日曆寬度)">
+                <span id="calendarToggleDrawerIcon">◨</span> 待辦清單
+              </button>
+            </div>
+          </div>
+
+          <!-- 1. Month View Grid (Notion-style Week Rows) -->
+          <div class="calendar-grid" id="calendarGrid">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- 2. Week View Grid -->
+          <div class="week-view-grid" id="calendarWeekGrid" style="display: none;">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- 3. Day View Container -->
+          <div class="day-view-container" id="calendarDayView" style="display: none;">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+        <!-- Selected Day Tasks Side Drawer (可折疊收合) -->
+        <aside class="calendar-side-pane" id="calendarSideDrawer">
+          <div class="side-pane-header">
+            <div>
+              <div class="selected-date-text" id="selectedDateTitle">2026-10-17</div>
+              <div style="font-size: 0.8rem; color: var(--text-muted);" id="selectedDateSubtitle">星期六</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span class="meta-tag" id="dayTaskBadge">0 項任務</span>
+              <button class="btn-drawer-toggle" id="drawerCollapseBtn" title="收起待辦抽屜 (釋放日曆全寬)">▶</button>
+            </div>
+          </div>
+
+          <!-- Notion / Todoist Style Inline Quick Add Bar (一行打字按 Enter 快速建立) -->
+          <div class="drawer-quick-add-box">
+            <span class="drawer-quick-add-icon">＋</span>
+            <input type="text" id="quickAddTaskInput" class="drawer-quick-add-input" placeholder="新增待辦，按 Enter 快速建立..." autocomplete="off">
+          </div>
+
+          <div class="selected-day-tasks-list" id="selectedDayTaskList">
+            <!-- Task items injected by JS -->
+          </div>
+
+          <div class="add-task-footer">
+            <button class="btn-primary-action" id="openNewTaskModalBtn">
+              <span>＋</span> 新增分步驟任務卡片
+            </button>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- 2. Notebooks View (個人知識筆記庫 - 原地更名 + 所見即所得直接編輯) -->
+    <section class="view-section" id="notebookView">
+      <div class="notebooks-view-container">
+        
+        <!-- Left Categories / Projects Tree -->
+        <aside class="notebook-sidebar" id="notebookSidebar">
+          <div class="sidebar-header">
+            <div class="sidebar-title">
+              <span>📁</span> 客戶與專案知識庫
+            </div>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <button class="btn-add-category" id="addCategoryBtn">＋ 新增</button>
+              <button class="btn-collapse-sidebar" id="sidebarCollapseBtn" title="收折側邊欄 (進入全螢幕沉浸寫作模式)">◀</button>
+            </div>
+          </div>
+
+          <div class="notebook-tree-list" id="notebookTreeList">
+            <!-- Categories and notes tree injected by JS with inline renaming -->
+          </div>
+        </aside>
+
+        <!-- Right Main Workspace Document (純所見即所得直接編輯畫布) -->
+        <div class="notebook-main-canvas" id="notebookCanvas">
+          <div class="notebook-doc-header">
+            <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+              <button class="btn-toggle-pane" id="notebookToggleSidebarBtn" title="展開／收合知識庫目錄 (釋放滿版寬度)">
+                <span id="notebookToggleSidebarIcon">◨</span> 目錄
+              </button>
+              <input type="text" class="doc-title-input" id="notebookDocTitle" placeholder="筆記標題...">
+            </div>
+            <div class="doc-actions">
+              <select class="meta-select" id="notebookCategorySelect">
+                <!-- Injected by JS -->
+              </select>
+              <button class="btn-toggle-pane" id="notebookZenModeBtn" title="滿版沉浸寫作模式 (工具列吸頂置頂)">
+                <span id="notebookZenModeIcon">⛶</span> 滿版放大
+              </button>
+              <button class="btn-delete-note-action" id="deleteNoteBtn" title="刪除此筆記">
+                🗑️ 刪除筆記
+              </button>
+            </div>
+          </div>
+
+          <!-- Direct WYSIWYG Toolbar (極簡緊湊常駐列 + 點擊展開全套工具箱) -->
+          <div class="editor-toolbar" id="notebookEditorToolbar">
+            <div class="toolbar-compact-row">
+              <div class="toolbar-compact-left">
+                <select class="meta-select template-dropdown-btn" id="notebookTemplateSelectToolbar">
+                  <option value="">📋 套用模板...</option>
+                </select>
+                <label class="tool-btn" style="cursor: pointer;">
+                  📷 貼圖/上傳
+                  <input type="file" id="notebookImageInput" accept="image/*" style="display: none;">
+                </label>
+                <span class="toolbar-hint-text">💡 反白文字浮動選單，輸入 / 叫出快捷</span>
+              </div>
+              <div class="toolbar-compact-right">
+                <button class="tool-action-btn primary" id="notebookSaveBtn" type="button" title="立即儲存至硬碟 (Ctrl+S)">
+                  💾 儲存
+                </button>
+                <button class="tool-action-btn" id="notebookToggleModeBtn" type="button" title="切換 Markdown 源碼 / 視覺化編輯 (Ctrl+/)">
+                  <span id="notebookModeIcon">🔀</span> <span id="notebookModeText">源碼模式</span>
+                </button>
+                <button class="btn-toggle-blocks" id="notebookToggleBlocksBtn" type="button" title="展開 / 收合完整 15 項區塊工具箱">
+                  <span class="toggle-icon">🛠️</span> <span class="toggle-text">工具箱</span>
+                </button>
+              </div>
+            </div>
+            <div class="toolbar-expanded-blocks" id="notebookExpandedBlocks">
+              <button class="tool-btn" data-action="h1" title="一級標題 (大標題)"><b>H1</b></button>
+              <button class="tool-btn" data-action="h2" title="二級標題 (章節標題)"><b>H2</b></button>
+              <button class="tool-btn" data-action="h3" title="三級標題 (細項標題)"><b>H3</b></button>
+              <button class="tool-btn" data-action="bold" title="粗體 (Ctrl+B)"><b>B</b></button>
+              <button class="tool-btn" data-action="todo" title="待辦核取項目 (可打勾、Tab/Shift+Tab 縮排)">☑ 待辦</button>
+              <button class="tool-btn" data-action="bullet" title="項目符號清單 (無序列表)">• 項目</button>
+              <button class="tool-btn" data-action="number" title="編號清單 (有序列表)">1. 編號</button>
+              <button class="tool-btn" data-action="toggle" title="折疊展開區塊 (Toggle)">▶ 折疊</button>
+              <button class="tool-btn" data-action="quote" title="引用區塊 (Quote)">❝ 引用</button>
+              <button class="tool-btn" data-action="divider" title="水平分割線 (Divider)">— 分割線</button>
+              <button class="tool-btn" data-action="table" title="插入表格 (Table)">田 表格</button>
+              <button class="tool-btn" data-action="code" title="程式碼區塊 (Code Block)">&lt;/&gt; 代碼</button>
+              <button class="tool-btn" data-action="callout-note" title="插入 Notion 藍色筆記框">💡 提示框</button>
+              <button class="tool-btn" data-action="callout-warning" title="插入 Notion 琥珀警示框">⚠️ 警告框</button>
+              <button class="tool-btn" data-action="callout-tip" title="插入 Notion 綠色技巧框">✨ 技巧框</button>
+              <button class="tool-btn" data-action="color" title="字體顏色與螢光標記">🎨 色彩</button>
+            </div>
+          </div>
+
+          <!-- Direct WYSIWYG Canvas (直接在閱讀模式排版中打字，底層自動存為 MD) -->
+          <div class="wysiwyg-paper-wrapper">
+            <div class="wysiwyg-paper">
+              <div class="wysiwyg-canvas markdown-body" id="notebookWysiwygEditor" contenteditable="true" spellcheck="false"></div>
+              <textarea class="markdown-source-editor" id="notebookMarkdownSource" spellcheck="false" placeholder="在此直接編輯 Markdown 原始碼..." style="display: none;"></textarea>
+            </div>
+          </div>
+
+          <div class="modal-canvas-footer">
+            <div class="save-status-text" id="notebookSaveStatus">
+              <span>●</span> 已自動存盤至本地 Markdown
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       Center Modal (100% Notion 頁面格式：大標題 + 鍵值屬性 + 整頁向下流暢滾動)
+       ============================================================ -->
+  <div class="modal-overlay" id="taskCenterModal">
+    <div class="modal-center-canvas notion-page-modal">
+      
+      <!-- Top Action Bar (展開滿版、關閉) -->
+      <div class="notion-modal-top-bar">
+        <div class="notion-top-bar-left">
+          <button class="notion-icon-btn" id="modalExpandBtn" title="全螢幕 / 視窗切換">⛶</button>
+        </div>
+        <div class="notion-top-bar-right">
+          <button class="notion-icon-btn" id="promoteToNotebookBtn" title="將這篇排查歷程沉澱到個人知識庫">
+            <span>⭐</span> <span style="font-size: 0.82rem;">沉澱至知識庫</span>
+          </button>
+          <button class="notion-icon-btn danger" id="deleteTaskModalBtn" title="刪除此任務">
+            🗑️
+          </button>
+          <button class="btn-close-modal" id="closeTaskModalBtn" title="關閉 (ESC)">✕</button>
+        </div>
+      </div>
+
+      <!-- Single Continuous Scrollable Page Container (整頁單一原生滾輪，徹底移除巢狀卡死) -->
+      <div class="notion-page-scrollable" id="notionPageScrollable">
+        
+        <!-- Large H1 Title Input (比照 Notion 大標題) -->
+        <div class="notion-title-section">
+          <input type="text" class="notion-title-input" id="modalTaskTitleInput" placeholder="任務名稱 (如：北富銀升級)...">
+        </div>
+
+        <!-- Notion Properties Vertical List (比照截圖屬性表) -->
+        <div class="notion-properties-table">
+          <!-- Row 1: Done -->
+          <div class="notion-prop-row">
+            <div class="notion-prop-name">
+              <span>☑ Done</span>
+            </div>
+            <div class="notion-prop-val">
+              <input type="checkbox" class="notion-done-checkbox" id="modalTaskCompletedCheckbox">
+              <label for="modalTaskCompletedCheckbox" id="modalTaskDoneLabel" class="notion-done-label">未完成</label>
+            </div>
+          </div>
+
+          <!-- Row 2: 工作日期 (Date / Date Range) -->
+          <div class="notion-prop-row">
+            <div class="notion-prop-name">
+              <span>📅 工作日期</span>
+            </div>
+            <div class="notion-prop-val notion-date-range-container">
+              <input type="date" class="notion-date-picker" id="modalTaskStartDate">
+              <span class="notion-date-arrow">→</span>
+              <input type="date" class="notion-date-picker" id="modalTaskEndDate">
+              <span id="modalTaskDateText" style="display: none;"></span>
+            </div>
+          </div>
+
+          <!-- Row 3: 優先次序 (Priority Pill) -->
+          <div class="notion-prop-row">
+            <div class="notion-prop-name">
+              <span>🔆 優先次序</span>
+            </div>
+            <div class="notion-prop-val">
+              <select class="notion-prop-select priority-select" id="modalTaskPrioritySelect">
+                <option value="high">🔴 優先完成 (High)</option>
+                <option value="normal" selected>🟡 普通次序 (Normal)</option>
+                <option value="low">⚪ 低優先 (Low)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Row 4: 客戶 (Client Tag) -->
+          <div class="notion-prop-row">
+            <div class="notion-prop-name">
+              <span>🏢 客戶</span>
+            </div>
+            <div class="notion-prop-val">
+              <input type="text" class="notion-prop-input client-input" id="modalTaskClientInput" placeholder="北富銀、國瑞汽車、宏碁..." list="clientListOptions">
+              <datalist id="clientListOptions">
+                <option value="北富銀">
+                <option value="國瑞汽車">
+                <option value="宏碁Acer">
+                <option value="國泰投信">
+                <option value="內部維運">
+              </datalist>
+            </div>
+          </div>
+
+          <!-- Row 5: 狀態 (Status) -->
+          <div class="notion-prop-row">
+            <div class="notion-prop-name">
+              <span>⚡ 狀態</span>
+            </div>
+            <div class="notion-prop-val">
+              <select class="notion-prop-select status-select" id="modalTaskStatusSelect">
+                <option value="進行中">進行中</option>
+                <option value="移到下週一">移到下週一</option>
+                <option value="等待客戶回覆">等待客戶回覆</option>
+                <option value="測試驗證中">測試驗證中</option>
+                <option value="已完成">已完成</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="notion-page-divider"></div>
+
+        <!-- Notion Page Body Canvas (100% 自由流 Markdown 筆記與待辦一體化) -->
+        <div class="notion-page-body-container">
+          
+          <!-- Direct WYSIWYG Editor Toolbar (極簡緊湊常駐列 + 點擊展開全套工具箱) -->
+          <div class="notion-editor-toolbar">
+            <div class="toolbar-compact-row">
+              <div class="toolbar-compact-left">
+                <select class="meta-select template-dropdown-btn" id="modalTemplateSelect">
+                  <option value="">📋 套用模板...</option>
+                </select>
+                <label class="tool-btn" style="cursor: pointer;">
+                  📷 貼圖/上傳
+                  <input type="file" id="modalImageInput" accept="image/*" style="display: none;">
+                </label>
+                <span class="toolbar-hint-text">💡 反白文字浮動選單，輸入 / 叫出快捷</span>
+              </div>
+              <div class="toolbar-compact-right">
+                <button class="tool-action-btn primary" id="modalSaveTaskBtn" type="button" title="立即儲存任務 (Ctrl+S)">
+                  💾 儲存
+                </button>
+                <button class="tool-action-btn" id="modalToggleModeBtn" type="button" title="切換 Markdown 源碼 / 視覺化編輯 (Ctrl+/)">
+                  <span id="modalModeIcon">🔀</span> <span id="modalModeText">源碼模式</span>
+                </button>
+                <button class="btn-toggle-blocks" id="modalToggleBlocksBtn" type="button" title="展開 / 收合完整 15 項區塊工具箱">
+                  <span class="toggle-icon">🛠️</span> <span class="toggle-text">工具箱</span>
+                </button>
+              </div>
+            </div>
+            <div class="toolbar-expanded-blocks" id="modalExpandedBlocks">
+              <button class="tool-btn" data-modal-action="h1" title="一級標題 (大標題)"><b>H1</b></button>
+              <button class="tool-btn" data-modal-action="h2" title="二級標題 (章節標題)"><b>H2</b></button>
+              <button class="tool-btn" data-modal-action="h3" title="三級標題 (細項標題)"><b>H3</b></button>
+              <button class="tool-btn" data-modal-action="bold" title="粗體 (Ctrl+B)"><b>B</b></button>
+              <button class="tool-btn" data-modal-action="todo" title="待辦核取項目 (可打勾、Tab/Shift+Tab 縮排)">☑ 待辦</button>
+              <button class="tool-btn" data-modal-action="bullet" title="項目符號清單 (無序列表)">• 項目</button>
+              <button class="tool-btn" data-modal-action="number" title="編號清單 (有序列表)">1. 編號</button>
+              <button class="tool-btn" data-modal-action="toggle" title="折疊展開區塊 (Toggle)">▶ 折疊</button>
+              <button class="tool-btn" data-modal-action="quote" title="引用區塊 (Quote)">❝ 引用</button>
+              <button class="tool-btn" data-modal-action="divider" title="水平分割線 (Divider)">— 分割線</button>
+              <button class="tool-btn" data-modal-action="table" title="插入表格 (Table)">田 表格</button>
+              <button class="tool-btn" data-modal-action="code" title="程式碼區塊 (Code Block)">&lt;/&gt; 代碼</button>
+              <button class="tool-btn" data-modal-action="callout-note" title="插入 Notion 藍色筆記框">💡 提示框</button>
+              <button class="tool-btn" data-modal-action="callout-warning" title="插入 Notion 琥珀警示框">⚠️ 警告框</button>
+              <button class="tool-btn" data-modal-action="callout-tip" title="插入 Notion 綠色技巧框">✨ 技巧框</button>
+              <button class="tool-btn" data-modal-action="color" title="字體顏色與螢光標記">🎨 色彩</button>
+            </div>
+          </div>
+
+          <!-- Seamless WYSIWYG Canvas (直接在整頁往下生長，整頁只有單一原生右側滾軸) -->
+          <div class="notion-wysiwyg-canvas markdown-body" id="modalTaskWysiwygEditor" contenteditable="true" spellcheck="false" placeholder="點擊此處直接書寫排查歷程、貼上截圖 (Ctrl+V) 或輸入 / 叫出快捷選單..."></div>
+          <textarea class="markdown-source-editor" id="modalTaskMarkdownSource" spellcheck="false" placeholder="在此直接編輯 Markdown 原始碼..." style="display: none; min-height: 280px;"></textarea>
+
+        </div>
+
+      </div>
+
+      <!-- Subtle Modal Footer -->
+      <div class="notion-modal-footer">
+        <div class="save-status-text" id="modalSaveStatus">
+          <span>●</span> 已自動防抖儲存
+        </div>
+        <button class="btn-close-action" id="closeTaskModalActionBtn">完成關閉 (ESC)</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Search Modal (Ctrl+K) -->
+  <div class="modal-overlay" id="searchModal">
+    <div class="search-modal-box">
+      <div class="search-input-wrapper">
+        <span style="font-size: 20px;">🔍</span>
+        <input type="text" class="search-input-field" id="searchInputField" placeholder="輸入關鍵字全文搜尋任務、步驟、客戶筆記..." autofocus>
+        <button class="btn-close-modal" id="closeSearchModalBtn">✕</button>
+      </div>
+      <div class="search-results-list" id="searchResultsList">
+        <div style="text-align: center; color: var(--text-dim); padding: 40px 0;">
+          輸入關鍵字即可即時檢索待辦步驟與客戶知識庫
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slash Command Dropdown Menu (Notion Style) -->
+  <div class="slash-menu" id="slashCommandMenu">
+    <div class="slash-item" data-slash="todo">
+      <span class="slash-icon">☑</span>
+      <div class="slash-text">
+        <span class="slash-title">待辦核取項目 (To-do List)</span>
+        <span class="slash-desc">可打勾、Tab/Shift+Tab 縮排的多階層任務清單</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="bullet">
+      <span class="slash-icon">•</span>
+      <div class="slash-text">
+        <span class="slash-title">項目符號清單 (Bulleted List)</span>
+        <span class="slash-desc">標準圓點無序清單，支援 Tab 多階層縮排</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="number">
+      <span class="slash-icon">1.</span>
+      <div class="slash-text">
+        <span class="slash-title">編號數字清單 (Numbered List)</span>
+        <span class="slash-desc">自動連續編號列表，適合排查步驟</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="h1">
+      <span class="slash-icon">🏷️</span>
+      <div class="slash-text">
+        <span class="slash-title">一級大標題 (Heading 1)</span>
+        <span class="slash-desc">最顯眼的主要段落大標題</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="h2">
+      <span class="slash-icon">📑</span>
+      <div class="slash-text">
+        <span class="slash-title">二級標題 (Heading 2)</span>
+        <span class="slash-desc">區段章節副標題</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="h3">
+      <span class="slash-icon">🔖</span>
+      <div class="slash-text">
+        <span class="slash-title">三級標題 (Heading 3)</span>
+        <span class="slash-desc">細部項目小標題</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="callout-note">
+      <span class="slash-icon">💡</span>
+      <div class="slash-text">
+        <span class="slash-title">筆記提示框 (Callout Note)</span>
+        <span class="slash-desc">醒目的藍色提示框，標註重點與需求</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="callout-warning">
+      <span class="slash-icon">⚠️</span>
+      <div class="slash-text">
+        <span class="slash-title">警告警示框 (Callout Warning)</span>
+        <span class="slash-desc">琥珀色警示，標註客戶雷區或操作風險</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="callout-tip">
+      <span class="slash-icon">✨</span>
+      <div class="slash-text">
+        <span class="slash-title">技巧推薦框 (Callout Tip)</span>
+        <span class="slash-desc">綠色技巧與最佳實踐建議</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="toggle">
+      <span class="slash-icon">▶</span>
+      <div class="slash-text">
+        <span class="slash-title">折疊展開區塊 (Toggle Block)</span>
+        <span class="slash-desc">收合長篇 SQL 輸出或 Log 紀錄</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="quote">
+      <span class="slash-icon">❝</span>
+      <div class="slash-text">
+        <span class="slash-title">引用區塊 (Quote)</span>
+        <span class="slash-desc">標註來自客戶或文件的原文說明</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="divider">
+      <span class="slash-icon">—</span>
+      <div class="slash-text">
+        <span class="slash-title">水平分割線 (Divider)</span>
+        <span class="slash-desc">視覺分隔不同的思考區塊</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="table">
+      <span class="slash-icon">田</span>
+      <div class="slash-text">
+        <span class="slash-title">插入表格 (Table)</span>
+        <span class="slash-desc">自訂行列數的現代排版表格</span>
+      </div>
+    </div>
+    <div class="slash-item" data-slash="code">
+      <span class="slash-icon">&lt;/&gt;</span>
+      <div class="slash-text">
+        <span class="slash-title">程式碼區塊 (Code Block)</span>
+        <span class="slash-desc">深色高亮背景的 SQL 或指令區塊</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Visual Table Grid Picker (Notion/Word 風格 8x8 方格選取器) -->
+  <div class="table-grid-picker" id="tableGridPicker" style="display: none;">
+    <div class="grid-picker-title">插入表格 (<span id="gridDimensionsLabel">1 × 1</span>)</div>
+    <div class="table-grid-matrix" id="tableGridMatrix">
+      <!-- 8x8 cells generated by JS -->
+    </div>
+  </div>
+
+  <!-- Image Float Toolbar & Resize Wrapper Template (圖片自由縮放與排版) -->
+  <div class="image-float-toolbar" id="imageFloatToolbar" style="display: none;">
+    <button class="img-tool-btn" data-img-size="25%">25%</button>
+    <button class="img-tool-btn" data-img-size="50%">50%</button>
+    <button class="img-tool-btn" data-img-size="75%">75%</button>
+    <button class="img-tool-btn" data-img-size="100%">100%</button>
+    <span class="toolbar-divider">|</span>
+    <button class="img-tool-btn" data-img-align="left" title="置左對齊">⬅️</button>
+    <button class="img-tool-btn" data-img-align="center" title="置中對齊">⏺️</button>
+    <span class="toolbar-divider">|</span>
+    <button class="img-tool-btn" id="imgZoomBtn" title="全螢幕放大">🔍</button>
+    <button class="img-tool-btn" id="imgDeleteBtn" title="刪除圖片" style="color: var(--accent-rose);">🗑️</button>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal">
+    <img src="" alt="放大檢視" class="lightbox-img" id="lightboxImage">
+  </div>
+
+  <!-- Floating Selection Bubble Toolbar (Notion Style 反白選取浮動氣泡工具列) -->
+  <div class="floating-bubble-menu" id="floatingBubbleMenu" style="display: none;">
+    <button class="bubble-btn" data-bubble-action="bold" title="粗體 (Ctrl+B)"><b>B</b></button>
+    <button class="bubble-btn" data-bubble-action="h1" title="一級標題"><b>H1</b></button>
+    <button class="bubble-btn" data-bubble-action="h2" title="二級標題"><b>H2</b></button>
+    <button class="bubble-btn" data-bubble-action="h3" title="三級標題"><b>H3</b></button>
+    <span class="bubble-divider">|</span>
+    <button class="bubble-btn" data-bubble-action="todo" title="待辦核取項目">☑ 待辦</button>
+    <button class="bubble-btn" data-bubble-action="bullet" title="項目符號清單">• 項目</button>
+    <button class="bubble-btn" data-bubble-action="number" title="編號清單">1. 編號</button>
+    <span class="bubble-divider">|</span>
+    <button class="bubble-btn" data-bubble-action="quote" title="引用區塊">❝ 引用</button>
+    <button class="bubble-btn" data-bubble-action="code" title="程式碼區塊">&lt;/&gt;</button>
+    <button class="bubble-btn" data-bubble-action="callout-note" title="提示框">💡</button>
+    <span class="bubble-divider">|</span>
+    <button class="bubble-btn" data-bubble-action="color" title="字體顏色與螢光標記">🎨 色彩</button>
+  </div>
+
+  <!-- Color & Highlight Palette Picker (Notion Style 精選色盤) -->
+  <div class="color-palette-picker" id="colorPalettePicker" style="display: none;">
+    <div class="palette-section-title">文字顏色 (Text Color)</div>
+    <div class="palette-swatches-grid">
+      <button class="color-swatch-btn" data-color-type="text" data-color="" title="預設文字顏色">
+        <span class="color-dot default-dot"></span> 預設白
+      </button>
+      <button class="color-swatch-btn" data-color-type="text" data-color="#f43f5e" title="珊瑚紅">
+        <span class="color-dot" style="background: #f43f5e;"></span> 珊瑚紅
+      </button>
+      <button class="color-swatch-btn" data-color-type="text" data-color="#f59e0b" title="琥珀黃">
+        <span class="color-dot" style="background: #f59e0b;"></span> 琥珀黃
+      </button>
+      <button class="color-swatch-btn" data-color-type="text" data-color="#10b981" title="祖母綠">
+        <span class="color-dot" style="background: #10b981;"></span> 祖母綠
+      </button>
+      <button class="color-swatch-btn" data-color-type="text" data-color="#38bdf8" title="天空藍">
+        <span class="color-dot" style="background: #38bdf8;"></span> 天空藍
+      </button>
+      <button class="color-swatch-btn" data-color-type="text" data-color="#818cf8" title="靛紫">
+        <span class="color-dot" style="background: #818cf8;"></span> 靛紫色
+      </button>
+      <button class="color-swatch-btn" data-color-type="text" data-color="#9ca3af" title="中性灰">
+        <span class="color-dot" style="background: #9ca3af;"></span> 中性灰
+      </button>
+    </div>
+    <div class="palette-section-title" style="margin-top: 10px;">螢光底色 (Highlight)</div>
+    <div class="palette-swatches-grid">
+      <button class="color-swatch-btn" data-color-type="bg" data-color="" title="無背景色">
+        <span class="color-dot default-dot"></span> 無底色
+      </button>
+      <button class="color-swatch-btn" data-color-type="bg" data-color="rgba(244, 63, 94, 0.28)" title="紅光標記">
+        <span class="color-dot" style="background: rgba(244, 63, 94, 0.7);"></span> 紅色光
+      </button>
+      <button class="color-swatch-btn" data-color-type="bg" data-color="rgba(245, 158, 11, 0.28)" title="黃光標記">
+        <span class="color-dot" style="background: rgba(245, 158, 11, 0.7);"></span> 黃色光
+      </button>
+      <button class="color-swatch-btn" data-color-type="bg" data-color="rgba(16, 185, 129, 0.28)" title="綠光標記">
+        <span class="color-dot" style="background: rgba(16, 185, 129, 0.7);"></span> 綠色光
+      </button>
+      <button class="color-swatch-btn" data-color-type="bg" data-color="rgba(56, 189, 248, 0.28)" title="藍光標記">
+        <span class="color-dot" style="background: rgba(56, 189, 248, 0.7);"></span> 藍色光
+      </button>
+      <button class="color-swatch-btn" data-color-type="bg" data-color="rgba(129, 140, 248, 0.28)" title="紫光標記">
+        <span class="color-dot" style="background: rgba(129, 140, 248, 0.7);"></span> 紫色光
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts: Marked for Markdown to HTML, Turndown for HTML to Markdown -->
+  <script src="libs/marked.umd.js"></script>
+  <script src="libs/turndown.js"></script>
+  <script src="app.js?v=2.0.6"></script>
+</body>
+</html>
+

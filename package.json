@@ -1,0 +1,20 @@
+﻿{
+  "name": "personal-work-hub",
+  "version": "1.0.0",
+  "description": "個人工作資產與日曆式知識庫系統 (Calendar Todo + Notebooks + WebP 截圖優化)",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "check:css": "node scripts/checkCss.js",
+    "fix:css": "node scripts/checkCss.js --fix"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "front-matter": "^4.0.2",
+    "multer": "^1.4.5-lts.1",
+    "open": "^10.1.0",
+    "sharp": "^0.33.5"
+  }
+}
